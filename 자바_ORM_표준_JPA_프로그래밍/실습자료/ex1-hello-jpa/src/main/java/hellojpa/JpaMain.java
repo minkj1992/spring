@@ -9,7 +9,6 @@ public class JpaMain {
     public static void main(String[] args) {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("hello");
         EntityManager em = emf.createEntityManager();   //트랜잭션 관리
-
         EntityTransaction tx = em.getTransaction();
         tx.begin();
         

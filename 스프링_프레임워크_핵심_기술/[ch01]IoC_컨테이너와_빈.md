@@ -36,7 +36,10 @@
 - `ApplicationContext` 인터페이스
 
 ## [1-3] ApplicationContext (Bean을 등록하는 여러가지 방법들)
-> [원본 Blog](https://seongmun-hong.github.io/spring/Spring-Bean-Create)
+> [연습코드](./Exercise/springapplicationcontext)
+
+
+[출처 Blog](https://seongmun-hong.github.io/spring/Spring-Bean-Create)
 
 1. 우선 Spring boot Project 만들고  
 2. BookService, BookRepository를 생성   
@@ -300,3 +303,36 @@ public class DemoApplication {
 
 }
 ```  
+
+## [1-4] @Autowire
+> [연습코드](./Exercise/deomspring51)
+
+- [정리된 blog](https://seongmun-hong.github.io/spring/Spring-IoC-Container(2))
+
+@Autowire를 통해 의존성 주입을 해보자.
+그전에 이때 생길 수 있는 대표적인 에러는 다음과 같다.
+
+```
+Parameter 0 of method setBookRepository in me.minkj1992.deomspring51.BookService required a bean of type 'me.minkj1992.deomspring51.BookRepository' that could not be found.
+```
+- 해결법: repo가 되는 class에 @Reposotory를 붙여주면 된다.
+
+
+- @Autowire를 통한 의존성 주입
+    - 1. 생성자 @Autowire
+    ```java
+        @Autowired
+        public BookService(BookRepository bookRepository) {
+            this.bookRepository = bookRepository;
+        }
+    ```
+
+    - 2. Setter @Autowire
+    ```java
+        @Autowired
+        public void setBookRepository(BookRepository bookRepository) {
+            this.bookRepository = bookRepository;
+        }
+    ```
+ 
+

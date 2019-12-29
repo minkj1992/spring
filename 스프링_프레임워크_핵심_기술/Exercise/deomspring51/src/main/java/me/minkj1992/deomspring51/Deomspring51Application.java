@@ -7,7 +7,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class Deomspring51Application {
 
     public static void main(String[] args) {
-
         SpringApplication.run(Deomspring51Application.class, args);
     }
 

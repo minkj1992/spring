@@ -1,6 +1,6 @@
 # 1. IoC 컨테이너와 빈
 
-## [1-1] IoC와 DI
+## [1-0] IoC와 DI
 > IoC란 어떤 객체가 사용하는 의존 객체를 직접 만들어 사용하는게 아니라, 주입 받아 사용하는 방법
 
 - `IoC`
@@ -18,7 +18,7 @@
             - 하나의 모듈이 바뀌면 의존한 다른 모듈까지 변경을 해주어야 한다는 위험성
             - 유닛테스트 작성을 어렵게 한다.(유닛테스트 목적이 독립적인 모듈을 생성하기 위해서 존재, `Mock` 객체를 통해 대체 가능)
 
-## [1-2] 스프링 IoC 컨테이너와 Bean
+## [1-1] 스프링 IoC 컨테이너와 Bean
 - `IoC 컨테이너`
     - `BeanFactory` 인터페이스
     - 애플리케이션 컴포넌트의 중앙 저장소
@@ -35,7 +35,7 @@
 
 - `ApplicationContext` 인터페이스
 
-## [1-3] ApplicationContext (Bean을 등록하는 여러가지 방법들)
+## [1-2] ApplicationContext (Bean을 등록하는 여러가지 방법들)
 > [연습코드](./Exercise/springapplicationcontext)
 
 
@@ -304,7 +304,7 @@ public class DemoApplication {
 }
 ```  
 
-## [1-4] @Autowire
+## [1-3] @Autowire
 > [연습코드](./Exercise/deomspring51)
 
 - [정리된 blog](https://seongmun-hong.github.io/spring/Spring-IoC-Container(2))
@@ -335,4 +335,4 @@ Parameter 0 of method setBookRepository in me.minkj1992.deomspring51.BookService
         }
     ```
  
-
+## [1-4] @Component와 컴포넌트 스캔

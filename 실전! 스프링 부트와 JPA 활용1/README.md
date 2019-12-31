@@ -1,7 +1,7 @@
 # 실전! 스프링 부트와 JPA 활용1 - 웹 애플리케이션 개발
 > https://www.inflearn.com/course/%EC%8A%A4%ED%94%84%EB%A7%81%EB%B6%80%ED%8A%B8-JPA-%ED%99%9C%EC%9A%A9-1/lecture/24769
 
-# 1편 - 웹 애플리케이션 개발
+## 1편 - 웹 애플리케이션 개발
 
 - 프로젝트 환경설정
     - [x] 프로젝트 생성
@@ -21,7 +21,7 @@
 - 회원 도메인 개발
     - [x] 회원 리포지토리 개발
     - [x] 회원 서비스 개발
-    - [中] 회원 기능 테스트
+    - [x] 회원 기능 테스트
 - 상품 도메인 개발
     - [ ] 상품 엔티티 개발(비즈니스 로직 추가)
     - [ ] 상품 리포지토리 개발
@@ -42,3 +42,28 @@
     - [ ] 변경 감지와 병합(merge)
     - [ ] 상품 주문
     - [ ] 주문 목록 검색, 취소
+
+
+## error
+- `application.yml` comment가 먹히지 않느다.
+```yaml
+
+#1. resources 생성하기
+#1-1. jdbc in-memory 설정하기 (jdbc:h2:mem:test)
+#2. spring_boot 자체에서 yaml 파일에 address 설정이 없다면 자동으로 setting을 해준다.
+spring:
+  datasource:
+    url: jdbc:h2:mem:test
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+#        show_sql: true
+        format_sql: true
+```
+이런식으로 주석을 넣으니까, 계속 에러가 뜬다.

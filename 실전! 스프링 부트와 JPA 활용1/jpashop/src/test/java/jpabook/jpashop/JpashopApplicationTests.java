@@ -13,4 +13,26 @@ public class JpashopApplicationTests {
 	public void contextLoads() {
 	}
 
+	@Test
+	public void () throws Exception{
+	    //given
+
+	    //when
+
+	    //then
+	}
+
+	public static void main(String[] args) {
+
+		System.out.println();
+	}
+
+	@Test
+	public void () throws Exception{
+	    //given
+
+	    //when
+
+	    //then
+	}
 }

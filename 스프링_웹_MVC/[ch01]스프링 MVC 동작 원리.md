@@ -72,6 +72,11 @@
         3. 서블릿 컨테이너 판단에 따라 해당 서블릿을 메모리에서 내려야 할 시점에 `destroy()` 호출
 
 ## 서블릿 애플리케이션 개발 
+```
+- Root WebApplicationContext
+- Servlet WebApplicationContext
+```
+
 - servlet java 코드 생성
     - init()
     - doGet()
@@ -84,7 +89,23 @@
     - war exploded(war를 풀어헤쳐서 실행하는 방법)
 
 ## 서블릿 리스너와 필터
+- Application Context (== IoC Container)
+    - Web Application 최상단에 위치하는 Context
+    - BeanFactory를 상속받고 있는 Context
+    - Spring에서의 Bean에 대한 IoC Container (= Bean Container)
+    - 공통 기능을 할 수 있는 Bean설정 (Datasource, Service 등)
+    - 특정 Servlet과 관련없는 설정을 한다. (@Service, @Repository, @Configuration, @Component)
+    - 각 Servlet에서 공유할 수 있는 Bean을 선언
 - servlet context
+    - Application Context를 자신의 부모 Context로 사용한다.
+    - 톰캣 컨테이너 실행 시 각 웹 애플리케이션 마다 하나의 ServletContext 객체를 생성됨.
+    - 하나의 web Application 내에 하나의 context 존재
+    - 즉 web application내에 있는 모든 서블릿들을 관리하며 정보공유를 도와준다.
+    - 쉽게 말해 web application의 등록정보이다. 
+    - 서블릿의 정보를 추출하려면 ServletContainer에 접근해야 하는데, 이렇게 접근 가능하게 해주는 것이 ServletContext이다. 서블릿을 하나하나에 접근하는 것이 아닌, 애플리케이션 단위로 접근하게 함.
+    - Servlet Context에 정의된 Bean은 Application Context의 Bean을 사용할 수 있다.
+    - **`Servlet` 구성에 필요한 Bean 설정 (Controller, Interceptor, MappingHandler등)**
+
     - servlet attribute
 - servlet application
 - servlet listener
@@ -92,8 +113,25 @@
     - session listener
 - servlet filter
     - servlet instance init() 이후, client request가 servlet instance에 올 때, 먼저 filter들을 chainning해서 지나간 뒤, instance로 도달한다.
-    
-## 스프링 IoC 컨테이너 연
+
+
+- [MVC 패턴의 전체 처리 과정](https://jeong-pro.tistory.com/96)
+## 스프링 IoC 컨테이너 연동
+- [스프링 레퍼런스](https://blog.outsider.ne.kr/735)
+
+- 스프링을 사용하겠다는 뜻 (2)
+    1. 스프링이 제공하는 IoC Container(==Application Context)를 사용한다는 뜻
+    2. SpringMVC를 사용하겠다는 뜻
+
+- 우리 Servlet에서 스프링이 제공하는 IoC Container를 사용해 보겠다.
+    - porm.xml에 의존성 추가 (spring-webmvc)
+    - web.xml에 servlet과 ContextLoaderListener 추가
+        - `ContextLoaderListener`: spring IoC Container(Spring Application Context)를 servlet Application의 생명주기에 맞춰서 Binding 해주는 역활.
+        - Application Context를 이 web application에 등록되어있는 servlet들이 사용할 수 있도록 Application Context를 만들어서 Servlet Context에 등록을 해준다. 그리고 servlet이 종료될 시점에 applicationContext를 제거해준다.
+        - Application Context를 만들어야 하니, Spring 설정 파일이 필요하다는 뜻
+
+
+
 ## 스프링 MVC 연동
 ## DispatcherServlet 1부  
 ## DispatcherServlet 2부  

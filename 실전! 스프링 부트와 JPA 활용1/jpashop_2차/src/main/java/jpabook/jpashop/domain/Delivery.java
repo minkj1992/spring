@@ -27,5 +27,4 @@ public class Delivery {
     private DeliveryStatus status; // READY, COMP
 
 
-
 }

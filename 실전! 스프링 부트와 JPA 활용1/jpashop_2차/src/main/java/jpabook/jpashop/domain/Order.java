@@ -1,6 +1,8 @@
 package jpabook.jpashop.domain;
 
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -11,8 +13,9 @@ import java.util.List;
 import static javax.persistence.FetchType.*;
 
 @Entity
-@Table(name="orders")
+@Table(name = "orders")
 @Getter @Setter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)  //Order을 new를 통하여 생성하지 못하도록 막는다.
 public class Order {
 
     @Id @GeneratedValue
@@ -60,5 +63,53 @@ public class Order {
     public void setDelivery(Delivery delivery) {
         this.delivery = delivery;
         delivery.setOrder(this);
+    }
+
+    //=생성 메서드=//
+    // 복잡한 생성은 별도의 생성메서드를 사용한다.
+    // 해당 method에서 Order을 생성해주기때문에 static사용
+    public static Order createOrder(Member member, Delivery delivery, OrderItem... orderItems) {
+        Order order = new Order();
+        order.setMember(member);
+        order.setDelivery(delivery);
+        for (OrderItem orderItem : orderItems) {
+            order.addOrderItem(orderItem);  //양방향 setter
+        }
+        order.setStatus(OrderStatus.ORDER);
+        order.setOrderDate(LocalDateTime.now());
+        return order;
+    }
+
+    //=비즈니스 로직=//
+    /**
+     * 주문 취소
+     */
+    public void cancel() {
+        if (delivery.getStatus() == DeliveryStatus.COMP) {  // status에 대해서 jpa가 query를 쏴준다.
+            throw new IllegalStateException("이미 배송이 완료된 상품은 취소가 불가능 합니다.");
+        }
+        this.setStatus(OrderStatus.CANCEL);
+        for (OrderItem orderItem : orderItems) {
+            orderItem.cancel();
+        }
+    }
+
+//    public int getTotalPrice() {
+//        int totalPrice = 0;
+//        for (OrderItem orderItem: orderItems) {
+//            totalPrice += orderItem.getTotalPrice();
+//        }
+//        return totalPrice;
+//    }
+
+    //=조회 로직=//
+
+    /**
+     * 주문 상품 가격 전체 조회
+     */
+    public int getTotalPrice() {
+        return orderItems.stream()
+                .mapToInt(OrderItem::getTotalPrice)
+                .sum();
     }
 }

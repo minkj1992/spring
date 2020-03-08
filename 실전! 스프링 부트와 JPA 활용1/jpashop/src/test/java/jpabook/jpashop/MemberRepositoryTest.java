@@ -1,5 +1,6 @@
 //package jpabook.jpashop;
 //
+//import jpabook.jpashop.repository.MemberRepository;
 //import org.assertj.core.api.Assertions;
 //import org.junit.Test;
 //import org.junit.runner.RunWith;
@@ -15,7 +16,8 @@
 //@SpringBootTest
 //public class MemberRepositoryTest {
 //
-//    @Autowired MemberRepository memberRepository;
+//    @Autowired
+//    MemberRepository memberRepository;
 //
 //    @Test
 //    @Transactional

@@ -52,6 +52,7 @@ public class MemberController {
         // 하지만 여기에서는 화면에 뿌리더라도 entity를 수정하지 않아도 되는 상황이라 이렇게 했다.
         // **API를 만들때는 절대로 ENTITY를 그대로 반환해서는 절대 안된다, Entity에 logic을 추가하면 API의 스펙이 변하게 되버리는 현상 발생**
         model.addAttribute("members", memberService.findMembers()); //attribute는 어디에 사용?
+
         return "members/memberList";
     }
 

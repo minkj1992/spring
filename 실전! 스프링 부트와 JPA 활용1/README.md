@@ -77,3 +77,10 @@ spring:
 스프링 프로젝트가 돌아가긴 한다, 우선 intellij는 utf-8설정으로 가져야 해야 jvm이 진행된다.
 ```
 - **x-windows-949(cp949)로 인코딩을 바꾸니까 validation의 인코딩이 깨지는 문제가 해결되었다.**
+
+
+- `java.lang.NullPointerException
+	at jpabook.jpashop.controller.ItemController.create(ItemController.java:37)`
+```
+ItemForm에다가 insert를 넣으니까 Null Exception이 생긴다.
+```

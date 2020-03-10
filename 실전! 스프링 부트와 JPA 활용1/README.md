@@ -67,3 +67,13 @@ spring:
         format_sql: true
 ```
 이런식으로 주석을 넣으니까, 계속 에러가 뜬다.
+
+- Intellij 한글 깨짐
+```
+- x-windows-949로 인코딩 변형시켜준뒤
+- 혹시 모르니 git reset --hard 70a475828b838cc239da9505c0e51de1db01701c 로 rollback 시켜주고
+- 8080 port process 닫아주니 fuser -n tcp -k 8080
+
+스프링 프로젝트가 돌아가긴 한다, 우선 intellij는 utf-8설정으로 가져야 해야 jvm이 진행된다.
+```
+- **x-windows-949(cp949)로 인코딩을 바꾸니까 validation의 인코딩이 깨지는 문제가 해결되었다.**

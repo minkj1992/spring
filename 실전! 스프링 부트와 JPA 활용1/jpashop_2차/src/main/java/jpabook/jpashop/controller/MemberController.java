@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -43,4 +44,15 @@ public class MemberController {
         memberService.join(member);
         return "redirect:/";    //redirect to home
     }
+
+    @GetMapping("/members")
+    public String list(Model model) {
+        // 사실 엔티티를 view에 뿌리는 것은 권장하지 않는다!!!
+        // 로직이 복잡해지면, DTO나 form을 확장시키고 엔티티는 화면에 종속적이지 않도록 만드는 것이 중요하다
+        // 하지만 여기에서는 화면에 뿌리더라도 entity를 수정하지 않아도 되는 상황이라 이렇게 했다.
+        // **API를 만들때는 절대로 ENTITY를 그대로 반환해서는 절대 안된다, Entity에 logic을 추가하면 API의 스펙이 변하게 되버리는 현상 발생**
+        model.addAttribute("members", memberService.findMembers()); //attribute는 어디에 사용?
+        return "members/memberList";
+    }
+
 }

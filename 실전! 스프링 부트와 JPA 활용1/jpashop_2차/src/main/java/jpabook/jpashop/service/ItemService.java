@@ -1,5 +1,6 @@
 package jpabook.jpashop.service;
 
+import jpabook.jpashop.domain.item.Book;
 import jpabook.jpashop.domain.item.Item;
 import jpabook.jpashop.repository.ItemRepository;
 import lombok.RequiredArgsConstructor;
@@ -18,8 +19,15 @@ public class ItemService {
 
     // save
     @Transactional
-    public void saveItem(Item item) {
-        itemRepository.save(item);
+    public void saveItem(Item item) { itemRepository.save(item); }
+
+    @Transactional
+    public Item updateItem(Long itemId, int price, String name, int stockQuantity) {
+        // 준영속성 context -> 변경감지 ( merge는 위험하다 )
+        Item findItem = itemRepository.findOne(itemId);
+        findItem.change(price, name, stockQuantity);
+        // @Transactional안에서 Entity를 다시 조회하고 값을 변경한다면 트랜잭션 commit 시점에 Dirty Checking이 일어나서 1차 캐시 값이 snapshot과 비교하여 UPDATE Query 일어난다.
+        return findItem;
     }
 
     //조회

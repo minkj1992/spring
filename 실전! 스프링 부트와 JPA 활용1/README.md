@@ -79,8 +79,25 @@ spring:
 - **x-windows-949(cp949)로 인코딩을 바꾸니까 validation의 인코딩이 깨지는 문제가 해결되었다.**
 
 
-- `java.lang.NullPointerException
-	at jpabook.jpashop.controller.ItemController.create(ItemController.java:37)`
-```
-ItemForm에다가 insert를 넣으니까 Null Exception이 생긴다.
-```
+- `Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed; nested exception is java.lang.NullPointerException] with root cause`
+  - 증상
+    - ItemForm에다가 insert  - 원인 
+    - `java/jpabook/jpashop/controller/ItemController.java`에서 service에 대하여 final을 붙여주지 않아, `@RequiredArgsConstructor`가 작동하지 않았다.
+      -
+        ```
+        /** [INJECTION 4: Lombok 적용]
+        @RequiredArgsConstructor: final 설정된 field들만 @Autowired를 생성시점에 적용해준다.
+        */
+        ```
+  - 해결책
+    - `private final ItemService itemService;`처럼 final을 붙여준다.를 넣으니까 Null Exception이 생긴다.
+  - 원인 
+    - `java/jpabook/jpashop/controller/ItemController.java`에서 service에 대하여 final을 붙여주지 않아, `@RequiredArgsConstructor`가 작동하지 않았다.
+      -
+        ```
+        /** [INJECTION 4: Lombok 적용]
+        @RequiredArgsConstructor: final 설정된 field들만 @Autowired를 생성시점에 적용해준다.
+        */
+        ```
+  - 해결책
+    - `private final ItemService itemService;`처럼 final을 붙여준다.

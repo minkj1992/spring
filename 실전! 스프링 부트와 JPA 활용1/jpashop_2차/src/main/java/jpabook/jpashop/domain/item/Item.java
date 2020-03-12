@@ -50,5 +50,12 @@ public abstract class Item {
         }
         this.stockQuantity = restStock;
     }
+
+    // setter를 남발하지말고, 변경점은 Entity 단에서 처리되도록하기 위해 change()를 생성해준다.
+    public void change(int price, String name, int stockQuantity) {
+        this.setPrice(price);
+        this.setName(name);
+        this.setStockQuantity(stockQuantity);
+    }
 }
 

@@ -18,6 +18,8 @@ public class ItemRepository {
         if (item.getId() == null) {
             em.persist(item);
         } else {
+            //merge는 attribute를 set을 통해서 다 갈아주기 때문에, 변경되지 말아야 할 녀석이 있다면
+            //, 실수로 값이 null 또는 error값으로 변경될 수 있다. merge를 하면 안된다.
             em.merge(item);
         }
     }

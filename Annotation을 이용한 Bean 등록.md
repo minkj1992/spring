@@ -9,10 +9,17 @@
     - `@repository`
         - Persistence Layer
         - 영속성을 가지는 속성
+        - 기존 EJB에서 사용하던 DAO(Presentation Layer의 FACADE)개념을 JPA Entity Manager를 통해서 처리해준다.
+        - DDD에서의 REPOSITORY개념은 @Entity에 존재한다.
+            - AGGREGATE를 처리하는 Entity를 Root로 설정해서 `CASCADE`적용시킴
+            - `@XToXMapping(cascade = CASCADE.TYPE.)`
+        - Boot에서는 HikariCp를 통해 DB Connectino Pool 관리를 해준다.
+        - 
     - `@service`
         - 다른 기능의 Service/다수의 DAO를 연결
         - 비지니스 로직을 Domain Entity에게 위임
         - Transaction / Cache등을 적용하는 Infra 단위
+        
 
 ## Bean 의존관계 주입
 > 의존하는 객체를 자동으로 주입해주는 anootation

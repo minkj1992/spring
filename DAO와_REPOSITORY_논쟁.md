@@ -1,6 +1,8 @@
 # DAO와_REPOSITORY_논쟁
 > http://egloos.zum.com/aeternum/v/1160846
 
+정리해본 결과, 해당 글은 철학적인 관점에서 REPOSITORY와 PERSISTENCE를 논의한 것으로, spring @Repository의 기준과는 다른 느낌이 있는 듯하다. 또한 Bean 개념도 JPA의 Bean과 EJB Bean이 역사적으로 다른 듯하다. 일례로 Spring의 @Repository는 해당 글에서 `DAO`의 `FACADE`역할을 `EntityManager`를 통해서 처리해주고, REPOSITORY에 대한 기능은 `@Entity`에게 위임해준다. @Entity에서 `CASCADE`를 통해서 `AGGREGATE`를 관리하도록 한다.
+
 ## 1) 시작은 EJB (Bean)
 -  EJB(Enterprise Java Beans)는 Java의 ‘Write Once, Run Anywhere’ 모토를 엔터프라이즈 어플리케이션 환경으로 확장하기 위한 Sun의 야심작이다.
 - 기본전략

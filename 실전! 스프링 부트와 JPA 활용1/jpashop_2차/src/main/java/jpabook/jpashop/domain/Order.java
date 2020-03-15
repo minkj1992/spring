@@ -4,6 +4,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -12,6 +13,7 @@ import java.util.List;
 
 import static javax.persistence.FetchType.*;
 
+@Slf4j
 @Entity
 @Table(name = "orders")
 @Getter @Setter
@@ -89,6 +91,7 @@ public class Order {
             throw new IllegalStateException("이미 배송이 완료된 상품은 취소가 불가능 합니다.");
         }
         this.setStatus(OrderStatus.CANCEL);
+        log.info("REAL CANCEL HAPPENED");
         for (OrderItem orderItem : orderItems) {
             orderItem.cancel();
         }

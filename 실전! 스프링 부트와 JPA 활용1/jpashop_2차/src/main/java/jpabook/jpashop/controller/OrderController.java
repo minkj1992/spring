@@ -8,17 +8,16 @@ import jpabook.jpashop.service.ItemService;
 import jpabook.jpashop.service.MemberService;
 import jpabook.jpashop.service.OrderService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
+@Slf4j
 public class OrderController {
 
     private final OrderService orderService;
@@ -37,7 +36,7 @@ public class OrderController {
     }
 
 
-    @PostMapping("order")
+    @PostMapping("/order")
     public String order(@RequestParam("memberId") Long memberId,
                         @RequestParam("itemId") Long itemId,
                         @RequestParam("count") int count){
@@ -49,12 +48,22 @@ public class OrderController {
         return "redirect:/orders";  //추후 결과 페이지 또는 결제 페이지로 넘어간다면 id값을 사용해야 한다.
     }
 
-    @GetMapping("orders")
+    @GetMapping("/orders")
     public String orderList(@ModelAttribute("orderSearch") OrderSearch orderSearch, Model model) {
         List<Order> orders = orderService.findOrders(orderSearch);
 
         model.addAttribute("orders", orders);
-
+        log.info("################################################################################");
+        log.info(String.valueOf(orders));
         return "order/orderList";
+    }
+
+    @PostMapping("/orders/{orderId}/cancel")
+    public String cancelOrder(@PathVariable("orderId") Long orderId) {
+        log.info("START CANCEL");
+        log.info(String.valueOf(orderId));
+        orderService.cancelOrder(orderId);
+        return "redirect:/orders";
+
     }
 }

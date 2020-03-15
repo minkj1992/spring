@@ -10,6 +10,7 @@ import jpabook.jpashop.repository.MemberRepository;
 import jpabook.jpashop.repository.OrderRepository;
 import jpabook.jpashop.repository.OrderSearch;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,6 +19,7 @@ import java.util.List;
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
+@Slf4j
 public class OrderService {
 
     private final OrderRepository orderRepository;
@@ -56,9 +58,9 @@ public class OrderService {
     public void cancelOrder(Long orderId) {
         Order order = orderRepository.findOne(orderId);
         // cancel을 쏴주면 dirty checking이 일어나서, JPA가 RDBMS의 update query문을 쏴준다.
+        log.info("CANCEL HAPPENED" + order);
         order.cancel();
     }
-
 
     /**
      * 검색
@@ -66,5 +68,4 @@ public class OrderService {
     public List<Order> findOrders(OrderSearch orderSearch) {
         return orderRepository.findAllByCriteria(orderSearch);
     }
-
 }

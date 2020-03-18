@@ -52,3 +52,8 @@ Caused by: org.hibernate.MappingException: Could not determine type for: jpabook
 - `OrderItem`
     - `@Table(name = "order_item")`추가
     - `Order order`필드에 `@ManyToOne` 추가
+
+## 200318
+
+1. API 개발
+- Entity는 자주 바뀌는데, Entity때문에 REST 스펙이 바뀌는 문제가 존재

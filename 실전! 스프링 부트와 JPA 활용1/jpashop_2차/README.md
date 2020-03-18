@@ -54,9 +54,23 @@ Caused by: org.hibernate.MappingException: Could not determine type for: jpabook
     - `Order order`필드에 `@ManyToOne` 추가
 
 ## 200318
-
-1. API 개발
+> REST API 
+1. 회원등록 
 - Entity는 자주 바뀌는데, Entity때문에 REST 스펙이 바뀌는 문제가 존재
 - API를 만들때는 항상 Entity를 parameter로 받지말라!
 - 또한 Entity를 외부에 노출해서도 안된다.
 - Entity와 Presentation계층을 분리하고, REST API에 강제하고 싶은 값은 DTO단에서 Validation강제해주어 모든 통신에서 처리되도록 한다. (부분 커스터마이징 가능)
+
+2. 회원 수정
+- HTTP Method
+	- PUT은 같은 변경을 여러번 해도 변경되지 않는다.
+	- POST는 ID가 변경될까?
+- updateDTO
+	- Entity에서는 @Getter정도만 사용하지만, DTO에는 좀 막쓴다.
+	- STATIC 사용하는 이유는?
+	- **Response에만 Constructor가 있어도 되는 이유는? 어쩌면 Parameter로 전달되면서 Request는 자동으로 set되는 것 같다. (@DATA)에 의해서?**
+- `updateMemberV2()`
+	- update는 변경감지 로직
+
+- `UpdateMemberResponse`
+	- **command 와 query는 분리한다.**

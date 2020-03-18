@@ -5,10 +5,7 @@ import jpabook.jpashop.service.MemberService;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
@@ -34,6 +31,20 @@ public class MemberApiController {
         return new CreateMemberResponse(id);
     }
 
+
+    @PutMapping("/api/v2/members/{id}")
+    public UpdateMemberResponse updateMemberV2(
+            @PathVariable("id") Long id,
+            @RequestBody @Valid UpdateMemberRequest request
+    ) {
+        // update는 변경감지!
+        memberService.update(id, request.getName());    // command, 여기에서 Member를 return해주어도 되지만 command와 query는 분리한다. 트랜잭션 끝난시점
+        // command와 query는 분리한다.
+        Member findMember = memberService.findOne(id); //query
+        return new UpdateMemberResponse(findMember.getId(), findMember.getName());
+    }
+
+
     //DTO
     // Entity와 Presentation계층을 분리하고, REST API에 강제하고 싶은 값은 DTO단에서 Validation강제해주어 모든 통신에서 처리되도록 한다. (부분 커스터마이징 가능)
     @Data
@@ -47,5 +58,18 @@ public class MemberApiController {
     @AllArgsConstructor
     static class CreateMemberResponse {
         private Long id;
+    }
+
+    @Data   // STATIC 사용하는 이유는?
+    @AllArgsConstructor //Entity에서는 @Getter정도만 사용하지만, DTO에는 좀 막쓴다.
+    static class UpdateMemberResponse {
+        private Long id;
+        private String name;
+
+    }
+
+    @Data
+    static class UpdateMemberRequest {
+        private String name;
     }
 }

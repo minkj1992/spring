@@ -74,3 +74,20 @@ Caused by: org.hibernate.MappingException: Could not determine type for: jpabook
 
 - `UpdateMemberResponse`
 	- **command 와 query는 분리한다.**
+
+3. 회원 조회
+
+- `public List<Member> membersV1() {}`
+	- 문제점
+		- 엔티티를 직접 노출하면 안된다.
+		- 순수하게 회원정보만 원하는데, 우선 Orders가 들어있다.
+		- 회원과 관련된 조회 api는 정말 다양하게 (orders가 필요한 API) 있을텐데, 감당 안되고 Entity에 Presentation Logic이 들어오면 감당 안된다.
+		- Entity의 name변수가 userName으로 변경되면 API 받는 다른 클라이언트들은 Json `Username: `을 입력 받는다.
+		- array가 바로 반환되어서 왔다.(JSON 스펙 확장 깨진다, 만약 count넘겨달라하면 못함)
+
+- `membersV2()`
+- class `Result`
+	- 한번 class로 감싸서 내보내야 json이 유연해진다. 배열타입으로 바로 내보내면 JSON은 array타입으로 받는다.
+	- 만약 count같은 값이 필요하다면 Result에다가 Count 추가하면 된다.
+- class `MemberDto`
+	- 

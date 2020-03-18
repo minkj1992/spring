@@ -7,9 +7,11 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotEmpty;
 
 
 @RestController //@Controller @ResponseBody
@@ -17,13 +19,30 @@ import javax.validation.Valid;
 public class MemberApiController {
 
     private final MemberService memberService;
-
+    // @RequestBody는 json형식으로 감싸준다고 생각하면 된다.
     @PostMapping("/api/v1/members")
     public CreateMemberResponse saveMemberV1(@RequestBody @Valid Member member) {
         Long id = memberService.join(member);
         return new CreateMemberResponse(id);
     }
 
+    @PostMapping("/api/v2/members")
+    public CreateMemberResponse saveMemberV2(@RequestBody @Valid CreateMemberRequest request) {
+        Member member = new Member();
+        member.setName(request.getName());
+        Long id = memberService.join(member);
+        return new CreateMemberResponse(id);
+    }
+
+    //DTO
+    // Entity와 Presentation계층을 분리하고, REST API에 강제하고 싶은 값은 DTO단에서 Validation강제해주어 모든 통신에서 처리되도록 한다. (부분 커스터마이징 가능)
+    @Data
+    static class CreateMemberRequest {
+        @NotEmpty
+        private String name;    //@DATA의 역할은? 생성자 만들어주지 않았는데 Request에 값이 저장되는 마법..
+    }
+
+    //DTO
     @Data
     @AllArgsConstructor
     static class CreateMemberResponse {

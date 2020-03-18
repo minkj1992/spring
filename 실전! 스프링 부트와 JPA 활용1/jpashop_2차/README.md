@@ -57,3 +57,6 @@ Caused by: org.hibernate.MappingException: Could not determine type for: jpabook
 
 1. API 개발
 - Entity는 자주 바뀌는데, Entity때문에 REST 스펙이 바뀌는 문제가 존재
+- API를 만들때는 항상 Entity를 parameter로 받지말라!
+- 또한 Entity를 외부에 노출해서도 안된다.
+- Entity와 Presentation계층을 분리하고, REST API에 강제하고 싶은 값은 DTO단에서 Validation강제해주어 모든 통신에서 처리되도록 한다. (부분 커스터마이징 가능)

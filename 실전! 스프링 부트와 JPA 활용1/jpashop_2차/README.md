@@ -52,9 +52,12 @@ org.springframework.beans.factory.BeanCreationException: Error creating bean wit
 4. API 개발 고급
 
 
-
-
-
 - indexing jpa 방식
 - Redis와 jpa Persistence Context(cache) 차이 그리고 session 관리는 어떻게 MVC에서 처리해주는가
 - 분산 DB에서는 JPA Persistence 관리 어떻게 하는가?
+
+5. jpa
+- jpa는 RDBMS용
+	- 분산 DB 트랜잭션 처리 bloking 말고는 없을까? 방법이
+- kafka, webflux, Hadoop 같은 분산처리는 인프라 및 서비스들은 jpa랑 어울리지 않는가?
+

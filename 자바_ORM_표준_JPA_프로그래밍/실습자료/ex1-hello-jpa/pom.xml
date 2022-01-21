@@ -20,7 +20,7 @@
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
             <!-- 다운로드한 h2 DB버전 -->
-            <version>1.4.200</version>
+            <version>2.1.210</version>
         </dependency>
     </dependencies>
 
